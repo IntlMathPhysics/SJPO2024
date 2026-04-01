@@ -469,33 +469,6 @@ function setAns(qid, idx){
   renderAK();
 }
 
-function exportIndex(){
-  // Save to Google Sheets for live student sync
-  const answers = {};
-  AK_QS.forEach(q=>{ answers[q.id]=akAnswers[q.id]; });
-  saveAnswersToSheet(answers);
-
-  // Decode base64 index.html
-  const bytes=atob(INDEX_B64);
-  const arr=new Uint8Array(bytes.length);
-  for(let i=0;i<bytes.length;i++) arr[i]=bytes.charCodeAt(i);
-  let html=new TextDecoder('utf-8').decode(arr);
-  
-  // Replace each answer
-  AK_QS.forEach(q=>{
-    const newAns=akAnswers[q.id];
-    const pattern=new RegExp('(\\{id:'+q.id+',ch:"[^"]+",text:".*?",opts:\\[.*?\\],ans:)\\d(\\})', 'gs');
-    html=html.replace(pattern, '$1'+newAns+'$2');
-  });
-  
-  // Download
-  const blob=new Blob([html],{type:'text/html'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='index.html';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
 
 // Render AK when tab 5 is clicked - patch into existing switchTab
 const _origSwitch=switchTab;
