@@ -252,7 +252,7 @@ function scCls(s){return s>=35?'hi':s>=20?'mid':'lo';}
 
 async function loadData(){
   try{
-    const sr=await fetch('https://script.google.com/macros/s/AKfycbz528rAiLfOlVAeWiPVv86hGy4VfDkGLMm5wS7RAPOaGXnIwmvYENPcONHUE-kdnnFTLQ/exec', {mode:'cors'});
+    const sr=await fetch('https://script.google.com/macros/s/AKfycbyNTnz5sCnFfLM3t1WEOrVQjVsfOOFO_3ASjiLqyZ7WmOwuq6KL4cxnPq-F8D2KJu74/exec', {mode:'cors'});
     const raw=await sr.json();
     const rows=Array.isArray(raw)?raw:[];
     allSubs=rows.map(row=>{
