@@ -252,9 +252,21 @@ function scCls(s){return s>=35?'hi':s>=20?'mid':'lo';}
 
 async function loadData(){
   try{
-    const sr=await fetch('https://script.google.com/macros/s/AKfycbz528rAiLfOlVAeWiPVv86hGy4VfDkGLMm5wS7RAPOaGXnIwmvYENPcONHUE-kdnnFTLQ/exec?action=get');
+    const sr=await fetch('https://script.google.com/macros/s/AKfycbz528rAiLfOlVAeWiPVv86hGy4VfDkGLMm5wS7RAPOaGXnIwmvYENPcONHUE-kdnnFTLQ/exec', {mode:'cors'});
     const raw=await sr.json();
-    allSubs=Array.isArray(raw)?raw:[];
+    const rows=Array.isArray(raw)?raw:[];
+    allSubs=rows.map(row=>{
+      return {
+        data:{
+          'student-id': row['Student ID']||'',
+          'score': row['Score']||0,
+          'total': row['Total']||50,
+          'accuracy': row['Accuracy']||'0%',
+          'answers': row['Answers']||'',
+        },
+        created_at: row['Timestamp']||new Date().toISOString(),
+      };
+    });
     latestByID={};
     allSubs.forEach(s=>{
       const id=getId(s);
