@@ -906,7 +906,9 @@ fetch('https://script.google.com/macros/s/AKfycbxycD5NvLdVD1dg8J_BBpEsWbW2WmZB1x
   .then(ans=>{
     if(ans && typeof ans==='object' && Object.keys(ans).length>0){
       QS.forEach(q=>{
-        if(ans[q.id]!==undefined) q.ans=+ans[q.id];
+        // Try both number and string keys
+        const v = ans[q.id] !== undefined ? ans[q.id] : ans[String(q.id)];
+        if(v !== undefined && v !== '') q.ans = +v;
       });
     }
   }).catch(()=>{});

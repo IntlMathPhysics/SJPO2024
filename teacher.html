@@ -175,7 +175,7 @@ tr:hover td{background:var(--surf2);}
   <div class="panel" id="panel-5">
     <div class="section-title">Answer Key Editor — Click A/B/C/D/E to change answer, then Export new index.html</div>
     <div style="margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-      <button onclick="saveAnswerKey()" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--mono);">💾 Save Answer Key</button>
+      <button onclick="saveAnswerKey()" id="save-ak-btn" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--mono);transition:all .15s;box-shadow:0 4px 0 #007a50;transform:translateY(0);" onmousedown="this.style.transform='translateY(4px)';this.style.boxShadow='none';" onmouseup="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 0 #007a50';" onmouseleave="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 0 #007a50';">💾 Save Answer Key</button>
       <span style="font-size:13px;color:var(--muted2);">After export, upload the file to Netlify to update the live quiz.</span>
     </div>
     <div class="table-wrap">
@@ -500,10 +500,13 @@ async function saveAnswersToSheet(answers){
   }
 }
 
-function saveAnswerKey(){
+async function saveAnswerKey(){
+  const btn = document.getElementById('save-ak-btn');
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Saving...'; btn.style.opacity='0.7'; }
   const answers = {};
   AK_QS.forEach(q=>{ answers[q.id]=akAnswers[q.id]; });
-  saveAnswersToSheet(answers);
+  await saveAnswersToSheet(answers);
+  if(btn){ btn.disabled=false; btn.textContent='💾 Save Answer Key'; btn.style.opacity='1'; }
 }
 
 </script>
