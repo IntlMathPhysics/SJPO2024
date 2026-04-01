@@ -882,7 +882,7 @@ function doSubmit(){
     'year': '2024'
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbyNTnz5sCnFfLM3t1WEOrVQjVsfOOFO_3ASjiLqyZ7WmOwuq6KL4cxnPq-F8D2KJu74/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbxycD5NvLdVD1dg8J_BBpEsWbW2WmZB1xxsHb_icmbE9A7K_v1tm8z1cZRTB6hcuyBg0g/exec', {
     method: 'POST',
     mode: 'no-cors',
     headers: {'Content-Type': 'application/json'},
@@ -900,6 +900,16 @@ function doSubmit(){
   });
 }
 
+// Fetch latest answers from Google Sheets
+fetch('https://script.google.com/macros/s/AKfycbxycD5NvLdVD1dg8J_BBpEsWbW2WmZB1xxsHb_icmbE9A7K_v1tm8z1cZRTB6hcuyBg0g/exec?action=getAnswers&year=2024')
+  .then(r=>r.json())
+  .then(ans=>{
+    if(ans && typeof ans==='object' && Object.keys(ans).length>0){
+      QS.forEach(q=>{
+        if(ans[q.id]!==undefined) q.ans=+ans[q.id];
+      });
+    }
+  }).catch(()=>{});
 renderSidebar();renderOv();
 </script>
 

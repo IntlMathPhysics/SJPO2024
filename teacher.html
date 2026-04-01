@@ -252,7 +252,7 @@ function scCls(s){return s>=35?'hi':s>=20?'mid':'lo';}
 
 async function loadData(){
   try{
-    const sr=await fetch('https://script.google.com/macros/s/AKfycbyNTnz5sCnFfLM3t1WEOrVQjVsfOOFO_3ASjiLqyZ7WmOwuq6KL4cxnPq-F8D2KJu74/exec', {mode:'cors'});
+    const sr=await fetch('https://script.google.com/macros/s/AKfycbxycD5NvLdVD1dg8J_BBpEsWbW2WmZB1xxsHb_icmbE9A7K_v1tm8z1cZRTB6hcuyBg0g/exec?year=2024', {mode:'cors'});
     const raw=await sr.json();
     const rows=Array.isArray(raw)?raw:[];
     allSubs=rows.map(row=>{
@@ -503,6 +503,26 @@ window.switchTab=function(n){
 document.getElementById('login-screen').style.display='none';
 document.getElementById('dashboard').style.display='block';
 loadData();
+// Save answer key to Google Sheets
+async function saveAnswersToSheet(answers){
+  const payload = {
+    action: 'saveAnswers',
+    year: '2024',
+    answers: Object.entries(answers).map(([q,ans])=>{return {q:+q, ans:+ans}})
+  };
+  try{
+    await fetch('https://script.google.com/macros/s/AKfycbxycD5NvLdVD1dg8J_BBpEsWbW2WmZB1xxsHb_icmbE9A7K_v1tm8z1cZRTB6hcuyBg0g/exec', {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    alert('✅ Answer key saved! Students will see updated answers immediately.');
+  }catch(e){
+    alert('Error saving: '+e.message);
+  }
+}
+
 </script>
 </body>
 </html>
