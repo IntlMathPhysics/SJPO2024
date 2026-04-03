@@ -1102,18 +1102,6 @@ function doSubmit(){
   });
 }
 
-// Fetch latest answers from Google Sheets
-fetch('https://script.google.com/macros/s/AKfycbxycD5NvLdVD1dg8J_BBpEsWbW2WmZB1xxsHb_icmbE9A7K_v1tm8z1cZRTB6hcuyBg0g/exec?action=getAnswers&year=2024')
-  .then(r=>r.json())
-  .then(ans=>{
-    if(ans && typeof ans==='object' && Object.keys(ans).length>0){
-      QS.forEach(q=>{
-        // Try both number and string keys
-        const v = ans[q.id] !== undefined ? ans[q.id] : ans[String(q.id)];
-        if(v !== undefined && v !== '') q.ans = +v;
-      });
-    }
-  }).catch(()=>{});
 renderSidebar();renderOv();
 </script>
 
