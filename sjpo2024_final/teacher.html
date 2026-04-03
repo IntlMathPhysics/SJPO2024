@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SJPO 2024 · Teacher Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="/intlmathandphysics.svg">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -171,6 +172,12 @@ tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
+  <!-- HEATMAP -->
+  <div class="panel" id="panel-4">
+    <div class="section-title">Answer Heatmap — <span style="color:var(--accent);">✓ correct</span> &nbsp; <span style="color:var(--red);">✗ wrong</span> &nbsp; <span style="color:var(--muted);">· not attempted</span></div>
+    <div class="heatmap-wrap"><div id="hm-wrap"><div class="loading">Loading…</div></div></div>
+  </div>
+
   <!-- ANSWER KEY -->
   <div class="panel" id="panel-5">
     <div class="section-title">Answer Key Editor — Click A/B/C/D/E to change answer, then Export new index.html</div>
@@ -186,11 +193,7 @@ tr:hover td{background:var(--surf2);}
     </div>
   </div>
 
-  <!-- HEATMAP -->
-  <div class="panel" id="panel-4">
-    <div class="section-title">Answer Heatmap — <span style="color:var(--accent);">✓ correct</span> &nbsp; <span style="color:var(--red);">✗ wrong</span> &nbsp; <span style="color:var(--muted);">· not attempted</span></div>
-    <div class="heatmap-wrap"><div id="hm-wrap"><div class="loading">Loading…</div></div></div>
-  </div>
+
 </div>
 
 <script>
@@ -210,10 +213,10 @@ const CH = {
   26:'Optics',27:'Optics',28:'Optics',
   29:'Electricity',30:'Electricity',31:'Electricity',32:'Electricity',33:'Electricity',34:'Electricity',
   35:'Magnetism',36:'Magnetism',37:'Magnetism',38:'Magnetism',
-  41:'Phys.Optics',42:'Phys.Optics',43:'Phys.Optics',
+  41:'Wave.Optics',42:'Wave.Optics',43:'Wave.Optics',
   44:'Thermal',45:'Thermal',46:'Thermal',47:'Thermal',48:'Thermal',49:'Thermal',50:'Thermal'
 };
-const CH_LIST=['Kinematics','Dynamics','Energy','Rotation','Oscillations','Gravitation','Fluids','Optics','Electricity','Magnetism','Phys.Optics','Thermal'];
+const CH_LIST=['Kinematics','Dynamics','Energy','Rotation','Oscillations','Gravitation','Fluids','Optics','Electricity','Magnetism','Wave.Optics','Thermal'];
 
 let allSubs=[], latestByID={};
 
